@@ -3,20 +3,33 @@ import AuthCallback from "../components/AuthCallback";
 import Dashboard from "../pages/Dashboard";
 import LandingPage from "../pages/LandingPage";
 import NotFound from "../pages/NotFound";
+import Private from "./Private";
+import Public from "./Public";
 
 const routes = createBrowserRouter([
   {
-    path: "/",
-    element: <LandingPage />,
+    element: <Public />,
+    children: [
+      {
+        path: "/",
+        element: <LandingPage />,
+      },
+      {
+        path: "/callback",
+        element: <AuthCallback />,
+      },
+    ],
   },
   {
-    path: "/dashboard",
-    element: <Dashboard />,
+    element: <Private />,
+    children: [
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
+      },
+    ],
   },
-  {
-    path: "/callback",
-    element: <AuthCallback />,
-  },
+
   {
     path: "*",
     element: <NotFound />,

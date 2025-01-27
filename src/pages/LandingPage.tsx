@@ -5,14 +5,19 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
-
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 function LandingPage() {
+  const login = async () => {
+    fetch(`${BASE_URL}/auth/google`);
+  };
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <nav className="border-b">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <div className="text-2xl font-bold">URLShort</div>
-          <Button variant="outline">Sign in with Google</Button>
+          <Button variant="outline" onClick={login}>
+            Sign in with Google
+          </Button>
         </div>
       </nav>
 

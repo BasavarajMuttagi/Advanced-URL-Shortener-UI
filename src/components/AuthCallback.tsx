@@ -19,7 +19,7 @@ function AuthCallback() {
           return;
         }
 
-        localStorage.setItem("token", token);
+        sessionStorage.setItem("token", token);
 
         await new Promise((resolve) => setTimeout(resolve, 1500));
 
