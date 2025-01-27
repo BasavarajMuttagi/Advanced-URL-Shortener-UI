@@ -8,7 +8,10 @@ import {
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 function LandingPage() {
   const login = async () => {
-    fetch(`${BASE_URL}/auth/google`);
+    const data = await fetch(`${BASE_URL}/auth/google`).then((res) =>
+      res.json(),
+    );
+    window.location.href = data.url;
   };
   return (
     <div className="flex min-h-screen flex-col bg-background">
