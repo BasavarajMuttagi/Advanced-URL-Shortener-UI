@@ -23,20 +23,8 @@ const formSchema = z.object({
   longUrl: z.string().url({
     message: "Please enter a valid URL",
   }),
-  topic: z
-    .string()
-    .min(2, {
-      message: "Topic must be at least 2 characters",
-    })
-    .optional(),
-  customAlias: z
-    .string()
-    .min(3, { message: "Alias must be at least 3 characters" })
-    .regex(/^[a-zA-Z0-9-_]+$/, {
-      message:
-        "Alias can only contain letters, numbers, hyphens and underscores",
-    })
-    .optional(),
+  topic: z.string().optional(),
+  customAlias: z.string().optional(),
 });
 
 function CreateShortURL() {

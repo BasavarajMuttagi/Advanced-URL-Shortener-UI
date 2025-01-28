@@ -3,7 +3,7 @@ import { Copy, ExternalLink } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader } from "./ui/card";
 
-interface UrlCardProps {
+export interface UrlType {
   id: string;
   createdAt: Date;
   updatedAt: Date;
@@ -19,7 +19,7 @@ export function UrlCard({
   topic,
   customAlias,
   shortKey,
-}: UrlCardProps) {
+}: UrlType) {
   const shortUrl = customAlias
     ? `${import.meta.env.VITE_SHORT_BASE_URL}/${customAlias}`
     : `${import.meta.env.VITE_SHORT_BASE_URL}/${shortKey}`;
