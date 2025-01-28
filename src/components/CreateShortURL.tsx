@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
+import { apiClient } from "../lib/utils";
 import { Button } from "./ui/button";
 import {
   Dialog,
@@ -19,6 +20,7 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
+
 const formSchema = z.object({
   longUrl: z.string().url({
     message: "Please enter a valid URL",
@@ -27,8 +29,9 @@ const formSchema = z.object({
   customAlias: z.string().optional(),
 });
 
-function CreateShortURL() {
+function CreateShortURL({ refetch }: { refetch: () => void }) {
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -39,14 +42,27 @@ function CreateShortURL() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    setOpen(false);
-    form.reset();
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      setIsLoading(true);
+      await apiClient.post("/api/shorten", values);
+      form.reset();
+      refetch();
+      setOpen(false);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
+  const handleOpenChange = (open: boolean) => {
+    if (!isLoading) {
+      setOpen(open);
+    }
+  };
   return (
-    <Dialog open={open} onOpenChange={setOpen} modal={true}>
+    <Dialog open={open} onOpenChange={handleOpenChange} modal={true}>
       <DialogTrigger asChild>
         <Button>Shorten URL</Button>
       </DialogTrigger>
@@ -112,9 +128,10 @@ function CreateShortURL() {
                 </FormItem>
               )}
             />
-
             <div className="flex justify-end">
-              <Button type="submit">Submit</Button>
+              <Button disabled={isLoading} type="submit">
+                {isLoading ? "Creating..." : "Submit"}
+              </Button>
             </div>
           </form>
         </Form>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CreateShortURL from "../components/CreateShortURL";
 import { OverallStats } from "../components/OverallStats";
 import { UrlCard, UrlType } from "../components/UrlCard";
@@ -11,9 +11,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../components/ui/select";
+import { apiClient } from "../lib/utils";
 
 export default function Dashboard() {
-  const [urls] = useState<UrlType[]>([]);
+  const [urls, setUrls] = useState<UrlType[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTopic, setSelectedTopic] = useState("all");
 
@@ -32,6 +33,14 @@ export default function Dashboard() {
     return matchesTopic && matchesSearch;
   });
 
+  const fetchUrls = async () => {
+    const result = await apiClient.get("/api/shorten/list");
+    setUrls(result.data);
+  };
+
+  useEffect(() => {
+    fetchUrls();
+  }, []);
   return (
     <div className="flex h-screen flex-col p-5">
       <div className="flex items-center justify-between pb-8">
@@ -41,7 +50,7 @@ export default function Dashboard() {
             Manage your shortened URLs and track their performance
           </p>
         </div>
-        <CreateShortURL />
+        <CreateShortURL refetch={fetchUrls} />
       </div>
 
       <div className="mb-8">
