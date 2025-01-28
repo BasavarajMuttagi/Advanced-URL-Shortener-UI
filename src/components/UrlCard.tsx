@@ -21,8 +21,8 @@ export function UrlCard({
   shortKey,
 }: UrlType) {
   const shortUrl = customAlias
-    ? `${import.meta.env.VITE_BASE_URL}/shorten/${customAlias}`
-    : `${import.meta.env.VITE_BASE_URL}/shorten/${shortKey}`;
+    ? `${import.meta.env.VITE_FE_URL}/${customAlias}`
+    : `${import.meta.env.VITE_FE_URL}/${shortKey}`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(shortUrl);

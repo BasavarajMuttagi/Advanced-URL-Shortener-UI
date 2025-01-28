@@ -5,13 +5,12 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+import { apiClient } from "../lib/utils";
+
 function LandingPage() {
   const login = async () => {
-    const data = await fetch(`${BASE_URL}/auth/google`).then((res) =>
-      res.json(),
-    );
-    window.location.href = data.url;
+    const result = await apiClient("/auth/google");
+    window.location.href = result.data.url;
   };
   return (
     <div className="flex min-h-screen flex-col bg-background">

@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import AuthCallback from "../components/AuthCallback";
+import HandleRedirect from "../components/HandleRedirect";
 import Dashboard from "../pages/Dashboard";
 import LandingPage from "../pages/LandingPage";
 import NotFound from "../pages/NotFound";
@@ -29,7 +30,14 @@ const routes = createBrowserRouter([
       },
     ],
   },
-
+  {
+    path: "/:alias",
+    element: <HandleRedirect />,
+  },
+  {
+    path: "/not-found",
+    element: <NotFound />,
+  },
   {
     path: "*",
     element: <NotFound />,
