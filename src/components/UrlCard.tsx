@@ -34,7 +34,7 @@ export function UrlCard({
   };
 
   return (
-    <Card className="transition-colors hover:bg-accent/50">
+    <Card className="cursor-pointer transition-colors hover:bg-accent/50">
       <CardHeader className="flex flex-row items-center justify-between p-4">
         <div className="flex flex-col space-y-1.5">
           <span className="font-semibold">{shortUrl}</span>
@@ -66,3 +66,22 @@ export function UrlCard({
     </Card>
   );
 }
+
+export type Analytics = {
+  totalClicks: number;
+  uniqueUsers: number;
+  clicksByDate: {
+    date: Date;
+    count: number;
+  }[];
+  osType: {
+    osName: string;
+    uniqueClicks: number;
+    uniqueUsers: number;
+  }[];
+  deviceType: {
+    deviceName: string;
+    uniqueClicks: number;
+    uniqueUsers: number;
+  }[];
+};

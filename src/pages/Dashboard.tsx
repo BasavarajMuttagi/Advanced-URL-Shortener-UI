@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import CreateShortURL from "../components/CreateShortURL";
 import { OverallStats } from "../components/OverallStats";
+import UrlAnalytics from "../components/UrlAnalytics";
 import { UrlCard, UrlType } from "../components/UrlCard";
 import { Input } from "../components/ui/input";
 import { ScrollArea } from "../components/ui/scroll-area";
@@ -90,7 +91,9 @@ export default function Dashboard() {
         <ScrollArea className="flex-1">
           <div className="space-y-4 pb-4">
             {filteredUrls.map((url) => (
-              <UrlCard key={url.id} {...url} />
+              <UrlAnalytics key={url.id} urlData={url}>
+                <UrlCard {...url} />
+              </UrlAnalytics>
             ))}
           </div>
           {filteredUrls.length === 0 && (
