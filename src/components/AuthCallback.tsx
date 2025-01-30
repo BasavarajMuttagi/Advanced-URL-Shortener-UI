@@ -4,13 +4,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 function AuthCallback() {
   const navigate = useNavigate();
-  const location = useLocation();
+  const loc = useLocation();
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const handleCallback = async () => {
       try {
-        const params = new URLSearchParams(location.search);
+        const params = new URLSearchParams(loc.search);
         const token = params.get("token");
 
         if (!token) {
@@ -24,6 +24,7 @@ function AuthCallback() {
         await new Promise((resolve) => setTimeout(resolve, 1500));
 
         navigate("/dashboard");
+        location.reload();
       } catch (err) {
         console.log(err);
         setError("Authentication failed. Please try again.");
@@ -32,7 +33,7 @@ function AuthCallback() {
     };
 
     handleCallback();
-  }, [navigate, location]);
+  }, [navigate, loc]);
 
   if (error) {
     return (
