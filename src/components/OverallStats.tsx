@@ -12,6 +12,8 @@ export function OverallStats() {
   const [analytics, setAnalytics] = useState<null | data>(null);
   const getOverallAnalytics = async () => {
     const result = await apiClient.get(`/api/analytics/overall`);
+    const test = await apiClient.get(`/api/analytics/topic/linkedIn`);
+    console.log(test.data);
     setAnalytics(result.data);
   };
   useEffect(() => {
