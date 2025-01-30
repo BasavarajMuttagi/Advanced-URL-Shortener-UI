@@ -8,7 +8,9 @@ export type tokenType = {
   exp: number;
 };
 export const getToken = () => sessionStorage.getItem("token") || "";
-export const logOut = () => sessionStorage.removeItem("token");
+export const logOut = () => {
+  sessionStorage.removeItem("token");
+};
 
 const useAuth = () => {
   const token = getToken();

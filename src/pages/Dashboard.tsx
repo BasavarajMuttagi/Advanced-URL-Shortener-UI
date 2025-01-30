@@ -1,5 +1,7 @@
+import CreateShortURL from "@/components/CreateShortURL";
+import { Button } from "@/components/ui/button";
+import useAuth, { logOut } from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
-import CreateShortURL from "../components/CreateShortURL";
 import { OverallStats } from "../components/OverallStats";
 import UrlAnalytics from "../components/UrlAnalytics";
 import { UrlCard, UrlType } from "../components/UrlCard";
@@ -15,6 +17,7 @@ import {
 import { apiClient } from "../lib/utils";
 
 export default function Dashboard() {
+  const { decodedToken } = useAuth();
   const [urls, setUrls] = useState<UrlType[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTopic, setSelectedTopic] = useState("all");
@@ -51,7 +54,16 @@ export default function Dashboard() {
             Manage your shortened URLs and track their performance
           </p>
         </div>
-        <CreateShortURL refetch={fetchUrls} />
+        <div className="flex items-center space-x-5 capitalize">
+          <span>{decodedToken?.displayName.toLowerCase()}</span>
+          <Button
+            onClick={() => {
+              logOut(), location.reload();
+            }}
+          >
+            Logout
+          </Button>
+        </div>
       </div>
 
       <div className="mb-8">
@@ -62,6 +74,7 @@ export default function Dashboard() {
         <div className="mb-4 flex items-center justify-between gap-4">
           <h2 className="text-xl font-semibold">Your URLs</h2>
           <div className="flex items-center gap-4">
+            <CreateShortURL refetch={fetchUrls} />
             <Select value={selectedTopic} onValueChange={setSelectedTopic}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Filter by topic" />
