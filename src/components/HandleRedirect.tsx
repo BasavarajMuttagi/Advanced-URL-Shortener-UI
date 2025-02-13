@@ -12,9 +12,7 @@ const HandleRedirect = () => {
       try {
         const response = await apiClient.get(`/api/shorten/${alias}`);
         if (response.data.url) {
-          setTimeout(() => {
-            window.location.href = response.data.url;
-          }, 3000);
+          window.location.href = response.data.url;
         }
       } catch (error) {
         console.error(error);
